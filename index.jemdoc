@@ -1,27 +1,23 @@
 # jemdoc: menu{MENU}{index.html}, nofooter  
-==Long Feng 
+==Guodong Li 
 
 ~~~
 {}{img_left}{bio.jpeg}{alt text}{170}{170}
-Assistant Professor \n 
-School of Data Science \n
-City University of Hong Kong\n
-Email: longfeng AT cityu DOT edu DOT hk
+Professor of Statistics \n
+Department of Statistics & Actuarial Science \n
+University of Hong Kong \n
+Pokfulam Road, Hong Kong \n
+Email: gdli AT hku DOT hk
 ~~~
 
-== About me
-I am an Assistant Professor in the School of Data Science, City University of Hong Kong. Before joining CityU, I was a Postdoctoral Associate in the Department of Biostatistics at Yale University, supervised by Prof. Heping Zhang.  My current research interests focus on image data analysis, convolutional neural networks, high-dimensional statistics, machine learning, etc. I obtained my Ph.D in Statistics from Rutgers University, advised by Profs. Cun-Hui Zhang and Lee Dicker. 
-
-== Education
-- 2017, Ph.D. in Statistics, Rutgers University  
-- 2012, B.S. in Statistics and Mathematics, Renmin University of China
-
+== Biography
+I joined the Department of Statistics & Actuarial Science, University of Hong Kong, in 2009 as an Assistant Professor, and I am currently a Professor. Prior to this, I had worked at the Division of Mathematical Sciences, Nanyang Technological University, Singapore, as an Assistant Professor since I received my PhD degree in statistics from the University of Hong Kong in 2007. I got my Bachelor and Master degrees in Statistics from Peking University.
 
 == Research
 My research interests include 
-- Image data analysis
-- Deep neural networks
-- High-dimensional data analysis
-
+- Time series analysis
+- Quantile regression
+- High-dimensional data
+- Machine learning
 
 
