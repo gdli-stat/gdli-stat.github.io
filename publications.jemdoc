@@ -1,4 +1,4 @@
-# jemdoc: menu{MENU}{research.html}, nofooter  
+# jemdoc: menu{MENU}{publications.html}, nofooter  
 == Publications and Preprints
 
 \* stands for PhD students under my supervision. \n \# stands for alphabetical authorship. 
@@ -23,8 +23,11 @@ via Sparse Kronecker Product Decomposition
 
 - Bi, X., *Feng, L.*, Wang, S., Lin, Z., Li, T., Zhao, B., Zhu, H. and Zhang, H. (2019).\"\ Common Genetic Variants Influence Human Cortical Brain Regions and Risk of Schizophrenia"\, Genetic Epidemiology, 1-11. \[[https://onlinelibrary.wiley.com/doi/abs/10.1002/gepi.22203 link]\].
 
-- *Feng, L.* and Dicker, L.H. (2018). \"\Approximate Nonparametric Maximum LikelihoodInference for Mixture Models via Convex Optimization"\,  Computational Statistics& Data Analysis (CSDA), 122, 80-91. \[[https://www.sciencedirect.com/science/article/pii/S0167947318300070 link]\].
+- *Feng, L.* and Dicker, L.H. (2018). \"\Approximate Nonparametric Maximum Likelihood
+Inference for Mixture Models via Convex Optimization"\,  Computational Statistics
+& Data Analysis (CSDA), 122, 80-91. \[[https://www.sciencedirect.com/science/article/pii/S0167947318300070 link]\].
 
-- *Feng, L.*, Ma, R. and Dicker, L.H. (2017). \"\Nonparametric Maximum LikelihoodApproximate Message Passing"\, Information Sciences and Systems (CISS), 2017 51st Annual Conference on (pp. 1-6), IEEE. \[[http://ieeexplore.ieee.org/document/7926084 link]\].
+- *Feng, L.*, Ma, R. and Dicker, L.H. (2017). \"\Nonparametric Maximum Likelihood
+Approximate Message Passing"\, Information Sciences and Systems (CISS), 2017 51st Annual Conference on (pp. 1-6), IEEE. \[[http://ieeexplore.ieee.org/document/7926084 link]\].
 
 
