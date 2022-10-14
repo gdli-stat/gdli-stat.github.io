@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+  <title>LI, Guodong</title>
+<!--mstheme-->
+  <link rel="stylesheet" type="text/css"
+ href="../_themes/ice/ice1011-106.css">
+  <meta name="Microsoft Theme" content="ice 1011">
+</head>
+<body>
+<h1 align="center"><b> <font size="5">Examples in R programming</font></b></h1>
+<p>　</p>
+<ul>
+  <li><font size="4"><a href="#how%20to%20call%20Fortran%20in%20R">How
+to call Fortran program in R</a></font></li>
+  <li><font size="4"><a href="#Some%20examples%20in%20R%20plot">Some
+examples in R plot</a></font></li>
+  <li><font size="4"><a href="#Some_interesting_R_programs">Some
+interesting R programs</a><br>
+    </font></li>
+</ul>
+<p></p>
+<p>**********************************************************************************************************************</p>
+<h1><font size="5"><a name="how to call Fortran in R"></a>How to
+call Fortran program in R</font></h1>
+<h1><font size="3">Environment of my computer:<span
+ style="font-weight: 400;"> Window XP, Compaq Visual Fortran 6.5,
+R2.7.2 (2008-08-25)</span></font></h1>
+<ol>
+  <li>Compile a Fortran program, and make sure there is no error. The
+following file is saved as "C:\temp\example.f90".
+    <table border="1" width="100%">
+      <tbody>
+        <tr>
+          <td width="462"><img src="Exampl3.gif" border="0"></td>
+          <td>Subroutine ligd(n,x)<br>
+!DEC$ ATTRIBUTES DLLEXPORT::ligd<br>
+!DEC$ ATTRIBUTES C, REFERENCE, ALIAS:'ligd_'::ligd<br>
+          <br>
+implicit none<br>
+integer n,i<br>
+real*8 x(n)<br>
+          <br>
+do i=1,n<br>
+x(i)=x(i)*x(i)<br>
+end do<br>
+return<br>
+End Subroutine ligd</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The following two lines in the above example are compulsory:</p>
+    <p><img src="Exampl4.gif" border="0"> </p>
+  </li>
+  <li>Open DOS windows, and use the line, <img src="Exampl5.gif"
+ border="0">, to generate the file "example.dll". Note that it will
+also generate other files, but only "example.dll" is useful for R.</li>
+  <li>In the following R program, "dyn.load" is used to load the
+Fortran subroutine, "is.loaded" is used to check whether the subroutine
+is loaded, "dyn.unload" is used to unload the Fortran subroutine.
+Finally, the vector "y" is updated by ".Fortran", and hence stores the
+returned data.</li>
+</ol>
+<p><img src="Exampl6.gif" border="0"></p>
+<p>Some other related webpages:
+<a
+ href="http://www.stats.uwo.ca/faculty/murdoch/software/compilingDLLs/">using
+external compiler with R at UWO, Canada (D. Murdoch's webpage)</a>,
+<a href="http://www.stat.umn.edu/%7Echarlie/rc/">calling C &amp;
+Fortran from R at UMN, USA (C. Geyer's webpage)</a>,
+<a href="http://math.acadiau.ca/ACMMaC/howtos/Fortran_R.html">calling
+Fortran function from R at Acadia University, Canada</a>,
+<a
+ href="http://hellmund.blogspot.com/2007/11/how-to-use-fortran95-code-in-r.html">how
+to Fortran 95 code in R at Gunnar's blog, Denmark</a></p>
+<p>**********************************************************************************************************************<a
+ href="http://hellmund.blogspot.com/2007/11/how-to-use-fortran95-code-in-r.html">
+</a></p>
+<h1><font size="5"><b><a name="Some examples in R plot"></a>Some
+examples in R plot</b></font></h1>
+<p><b>Example 1:</b></p>
+<table border="1" height="468" width="85%">
+  <tbody>
+    <tr>
+      <td><b>Programs:</b></td>
+      <td>X &lt;- c(1:1000)*0.01-5; Density &lt;- dnorm(X); T1 &lt;-
+dt(X,1); <br>
+plot(x=X,y=Density,type='l',xlab="X-axis",ylab="Density",xlim=c(-5,5),ylim=c(0,0.4),col='2');
+lines(x=X,y=T1,col='3');<br>
+legend(3,0.3,c("N(0,1)","df=1"),col=c(2,3),lty=c(1,1),title="Degrees")</td>
+    </tr>
+    <tr>
+      <td><b>Output:</b></td>
+      <td>
+      <p align="center"> <img src="Exampl7.gif" border="0" height="404"
+ width="591"></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p align="left">
+**********************************************************************************************************************
+</p>
+<h1><a name="Some_interesting_R_programs"></a>Some interesting R
+programs<b></b></h1>
+<p align="left"><b>Example 1: </b>This example is used to draw a
+scatterplot-like picture to check the latest exchange rates of several
+important currencies.</p>
+<hr> library(tseries)<br>
+Exchange.Rate &lt;- function(currency=c('USD','EUR','JPY'),days=100){<br>
+&nbsp;tempy &lt;- c(0,1); tempx&lt;-c(0,1)<br>
+&nbsp;par(mfrow=c(length(currency),length(currency)),mai=c(0.01,0.25,0,0))<br>
+&nbsp;for(i in 1:length(currency)){<br>
+&nbsp;for(j in 1:length(currency)){<br>
+&nbsp; if(i==j){plot(y=tempy,x=tempx);
+text(0.5,0.5,paste(currency[i],'to(row)'))}<br>
+&nbsp; else{<br>
+&nbsp; temp.curr &lt;- paste(currency[i],'/',currency[j],sep='')<br>
+&nbsp; x &lt;- get.hist.quote(instrument = temp.curr, provider =
+"oanda",start = Sys.Date() - days)<br>
+&nbsp; plot(x,xlab='',ylab='')<br>
+&nbsp;}}}<br>
+par(mfrow=c(1,1))<br>
+}
+<hr style="width: 100%; height: 2px;">
+<p align="left"><b></b></p>
+<p align="left"><b>Example 2: </b>This example is used to draw a plot
+for a stock with closing price and volume. </p>
+<hr>library(tseries)<br>
+Stocks &lt;- function(stock='0005.HK',days=100){<br>
+x &lt;- get.hist.quote(instrument=stock,provider='yahoo',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+quote = c("Close","Volume"),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+start = Sys.Date() - days)<br>
+x$Volume &lt;- x$Volume/1000000<br>
+plot(x,main=stock)<br>
+}<br>
+<br>
+Stocks('0005.HK',100); Stocks('1088.HK',100); Stocks('^HSI',100);
+<hr>
+<p align="left">**********************************************************************************************************************
+</p>
+<p></p>
+<p>　</p>
+</body>
+</html>

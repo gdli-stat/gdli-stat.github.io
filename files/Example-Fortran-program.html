@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+  <title>LI, Guodong</title>
+<!--mstheme-->
+  <link rel="stylesheet" type="text/css"
+ href="../_themes/ice/ice1011-106.css">
+  <meta name="Microsoft Theme" content="ice 1011">
+</head>
+<body>
+<h1 align="center"><b> <font size="5">Examples in Fortran programming</font></b></h1>
+<p>　</p>
+<ul>
+  <li><font size="4"><a href="#how%20to%20call%20Fortran%20in%20R">Determinant
+of a Matrix</a></font></li>
+  <li><a href="#Determinant_and_inverse_of_lower">Determinant and
+inverse of lower matrices</a></li>
+  <br>
+  <br>
+</ul>
+**********************************************************************************************************************
+<h1><font size="5"><b><a name="how to call Fortran in R"></a>Determinant
+of a Matrix (Fortran 90)</b></font></h1>
+!Function to find the determinant of a square matrix<br>
+!Author : Louisda16th a.k.a Ashwith J. Rego<br>
+!Description: The subroutine is based on two key points:<br>
+!1] A determinant is unaltered when row operations are performed:
+Hence, using this principle,<br>
+!row operations (column operations would work as well) are used<br>
+!to convert the matrix into upper traingular form<br>
+!2]The determinant of a triangular matrix is obtained by finding the
+product of the diagonal elements<br>
+!<br>
+REAL FUNCTION FindDet(matrix, n)<br>
+&nbsp;&nbsp;&nbsp; IMPLICIT NONE<br>
+&nbsp;&nbsp;&nbsp; REAL, DIMENSION(n,n) :: matrix<br>
+&nbsp;&nbsp;&nbsp; INTEGER, INTENT(IN) :: n<br>
+&nbsp;&nbsp;&nbsp; REAL :: m, temp<br>
+&nbsp;&nbsp;&nbsp; INTEGER :: i, j, k, l<br>
+&nbsp;&nbsp;&nbsp; LOGICAL :: DetExists = .TRUE.<br>
+&nbsp;&nbsp;&nbsp; l = 1<br>
+&nbsp;&nbsp;&nbsp; !Convert to upper triangular form<br>
+&nbsp;&nbsp;&nbsp; DO k = 1, n-1<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; IF (matrix(k,k) == 0) THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DetExists =
+.FALSE.<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DO i = k+1, n<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; IF (matrix(i,k) /= 0) THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DO j = 1, n<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; temp =
+matrix(i,j)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; matrix(i,j)=
+matrix(k,j)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; matrix(k,j) =
+temp<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; END DO<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DetExists = .TRUE.<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; l=-l<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; EXIT<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; ENDIF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; END DO<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; IF (DetExists
+.EQV. .FALSE.) THEN<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; FindDet = 0<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; return<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; END IF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ENDIF<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DO j = k+1, n<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; m =
+matrix(j,k)/matrix(k,k)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DO i = k+1, n<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; matrix(j,i) = matrix(j,i) - m*matrix(k,i)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; END DO<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; END DO<br>
+&nbsp;&nbsp;&nbsp; END DO<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; !Calculate determinant by finding product of
+diagonal elements<br>
+&nbsp;&nbsp;&nbsp; FindDet = l<br>
+&nbsp;&nbsp;&nbsp; DO i = 1, n<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; FindDet = FindDet * matrix(i,i)<br>
+&nbsp;&nbsp;&nbsp; END DO<br>
+&nbsp;&nbsp;&nbsp; <br>
+END FUNCTION FindDet<br>
+<br>
+**********************************************************************************************************************<br>
+<h1><a name="Determinant_and_inverse_of_lower"></a>Determinant and
+inverse of lower matrices</h1>
+<ul>
+  <li>Determinant of <a href="matrix/m22det_f90.txt">2X2</a>, <a
+ href="matrix/m33det_f90.txt">3X3</a>, <a href="matrix/m44det_f90.txt">4X4</a>,
+    <a href="matrix/m55det_f90.txt">5X5</a>, and <a
+ href="matrix/m66det_f90.txt">6X6</a>.</li>
+  <li>Inverse matrices for <a href="matrix/m22inv_f90.txt">2X2</a>, <a
+ href="matrix/m33inv_f90.txt">3X3</a>, <a href="matrix/m44inv_f90.txt">4X4</a>,
+    <a href="matrix/m55inv_f90.txt">5X5</a>, and <a
+ href="matrix/m66inv_f90.txt">6X6</a>.</li>
+</ul>
+For more interesting&nbsp;Fortran 90 codes, please visit&nbsp;<a
+ href="http://www.davidgsimpson.com/software.html">David G. Simpson's
+websites</a>.<br>
+**********************************************************************************************************************<br>
+<br>
+</body>
+</html>

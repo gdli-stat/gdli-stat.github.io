@@ -1,0 +1,59 @@
+#!/bin/sh
+### Job name
+#PBS -N test
+### Declare job non-rerunable
+#PBS -r n
+### Mail to user
+#PBS -m ae
+
+### Queue name (qprod or qdev)
+
+### qprod is the queue for running production jobs.
+### 90(******++++++-----) nodes can run jobs in this queue. 
+### Each job in this queue can use 1-32(*******++++---) nodes.
+### Parallel jobs will be favoured by the system.
+### Walltime can be  00:00:01 to 10:00:00
+
+### qdev is the queue for program testing.
+### 2 nodes can run jobs in this queue. 
+### Each job in this queue can use 1-2 nodes.
+### Walltime can be  00:00:01 to 00:15:00
+
+#PBS -q qprod
+#####PBS -q qdev
+
+### Wall clock time required. This example is 2 hours
+#PBS -l walltime=09:59:00
+
+### Number of nodes 
+
+### The following means 1 node and 1 processor. 
+### Clearly, this is for serial job
+###PBS -l nodes=1:ppn=1
+
+### The following means 4 nodes required. Processor Per Node=1, 
+### i.e., total 4 CPUs needed to be allocated. 
+### ppn (Processor Per Node) can be either 1 or 2.
+#PBS -l nodes=4:ppn=1
+
+### Another example 
+### 5 nodes required. Processor per node=2, total 10 CPUs 
+### need to be allocated.  
+###PBS -l nodes=4:ppn=2
+
+
+#The following stuff will be executed in the first allocated node.
+#Please don't modify it
+
+echo $PBS_JOBID : `wc -l < $PBS_NODEFILE` CPUs allocated: `cat $PBS_NODEFILE`
+cd $PBS_O_WORKDIR    
+# Define number of processors
+NPROCS=`wc -l < $PBS_NODEFILE`
+
+echo ===========================================================
+
+# Run the parallel MPI executable "a.out"
+mpirun ./nonp > ${PBS_JOBNAME}.`echo ${PBS_JOBID} | sed "s/.hpcpower//" `
+
+
+
