@@ -189,4 +189,37 @@ points(y=ar.pre$pred+0.96*ar.pre$se,x=c((n+1):(n+n.head)),col=4)
 lines(y=ar.pre$pred-0.96*ar.pre$se,x=c((n+1):(n+n.head)),col=4)
 points(y=ar.pre$pred-0.96*ar.pre$se,x=c((n+1):(n+n.head)),col=4)
 
+#############################################################
+# Part VI. Conditional heteroscedastic time series models;
+#############################################################
 
+# Set the physical path
+setwd("C:/Users/ligd/Google Drive/Presenations/Teaching/Rcode/")
+# Read the file into R software
+hsi <- read.csv(file = 'HSI.csv'); head(hsi)
+
+hsi.return <- hsi$return[2:length(hsi$return)]
+# Time plot of daily closing prices
+plot(hsi$Close, type='l', ylab='Price', xlab='Time')
+# Time plot of log returns
+plot(hsi.return, type='l', ylab='Log Return', xlab='Time')
+
+# Sample ACF and PACF of log returns
+par(mfrow=c(1,2),mai=c(0.8,0.8,0.1,0.1))
+acf(hsi.return, lag=100, main=''); pacf(hsi.return, lag=100, main='')
+par(mfrow=c(1,1),mai=c(0.8,0.8,0.1,0.1))
+
+# Sample ACF and PACF of squared log returns
+hsi.return2 <- hsi.return*hsi.return
+par(mfrow=c(1,2),mai=c(0.8,0.8,0.1,0.1))
+acf(hsi.return2, lag=100, main=''); pacf(hsi.return2, lag=100, main='')
+par(mfrow=c(1,1),mai=c(0.8,0.8,0.1,0.1))
+
+# Fitting an GARCH model (need the package of "fGarch")
+library(fGarch)
+gfit <- garchFit(~garch(1,1), data=hsi.return, trace=FALSE, cond.dist = c("norm"),
+include.mean = FALSE)
+summary(gfit)
+
+# Predict the next 10 values
+predict(gfit, n.ahead = 10, plot=TRUE, conf=.95, nx=100)
